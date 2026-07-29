@@ -18,6 +18,7 @@ import { useColors } from '@/hooks/useColors';
 import { useGame } from '@/context/GameContext';
 import { useGameAudio } from '@/hooks/useGameAudio';
 import { useAdReward } from '@/hooks/useAdReward';
+import { useInterstitialAd } from '@/hooks/useInterstitialAd';
 import { GameHeader } from '@/components/GameHeader';
 import { PlinkoBoard } from '@/components/PlinkoBoard';
 import { SpinWheelModal } from '@/components/SpinWheelModal';
@@ -59,6 +60,8 @@ export default function GameScreen() {
   const [showSpin, setShowSpin] = useState(false);
   const [showBalls, setShowBalls] = useState(false);
   const [showAdsModal, setShowAdsModal] = useState(false);
+
+  const { startTimer: startInterstitialTimer, stopTimer: stopInterstitialTimer } = useInterstitialAd();
 
   const autoRef = useRef(autoMode);
   autoRef.current = autoMode;
@@ -132,6 +135,14 @@ export default function GameScreen() {
       if (autoTimerRef.current) clearTimeout(autoTimerRef.current);
     }
   }, [balls, autoMode]);
+
+  // Start 5-minute interstitial timer once splash is gone
+  useEffect(() => {
+    if (!showSplash) {
+      startInterstitialTimer();
+      return () => stopInterstitialTimer();
+    }
+  }, [showSplash, startInterstitialTimer, stopInterstitialTimer]);
 
   // Show splash until BOTH: (a) 10s timer fired via SplashLoading.onFinished,
   // AND (b) AsyncStorage data is ready (isLoaded from GameContext).

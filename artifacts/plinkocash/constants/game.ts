@@ -44,12 +44,17 @@ export const BALLS_PER_AD = 2;
 export const ADMOB_APP_ID = 'ca-app-pub-6881903056221433~3983256819';
 export const ADMOB_REWARD_UNIT_ID = 'ca-app-pub-6881903056221433/6525779813';
 export const ADMOB_BANNER_UNIT_ID = 'ca-app-pub-6881903056221433/5160607111';
+export const ADMOB_INTERSTITIAL_UNIT_ID = 'ca-app-pub-6881903056221433/7537724566';
+
+// Interstitial video shows every 5 minutes of play
+export const INTERSTITIAL_INTERVAL_MS = 5 * 60 * 1000;
 
 // Peg physics constants
-export const PEG_RADIUS = 5;
-export const BALL_RADIUS = 6;
-export const GRAVITY = 0.28;
-export const RESTITUTION = 0.52;
+// Smaller radii so ball fits through the 21-pin bottom row (boardWidth/22 gap)
+export const PEG_RADIUS = 3;
+export const BALL_RADIUS = 4;
+export const GRAVITY = 0.30;
+export const RESTITUTION = 0.55;
 export const FRICTION = 0.997;
 
 export interface Peg {
@@ -59,20 +64,20 @@ export interface Peg {
 
 export function generatePegs(boardWidth: number, boardHeight: number): Peg[] {
   const pegs: Peg[] = [];
-  const ROWS = 12;
-  const TOP = 50;
-  const BOTTOM_RESERVE = 40;
+  // 20 rows → bottom row has 21 pegs → 20 prize slots exactly
+  const ROWS = 20;
+  const TOP = 40;
+  const BOTTOM_RESERVE = 36;
   const usableH = boardHeight - TOP - BOTTOM_RESERVE;
   const centerX = boardWidth / 2;
 
-  // Pyramid: row 0 (top) = 2 pegs, row 11 (bottom) = 13 pegs.
-  // All rows share the same horizontal spacing so the shape widens
-  // naturally from a single point at the top to full width at the bottom.
-  const BOTTOM_COUNT = 13;
+  // Pyramid: row 0 (top) = 2 pegs, row 19 (bottom) = 21 pegs.
+  // spacing is based on 21+1=22 equal divisions of boardWidth.
+  const BOTTOM_COUNT = 21;
   const spacing = boardWidth / (BOTTOM_COUNT + 1);
 
   for (let row = 0; row < ROWS; row++) {
-    const count = 2 + row; // 2 … 13
+    const count = 2 + row; // 2 … 21
     const y = TOP + (row / (ROWS - 1)) * usableH;
     const rowWidth = (count - 1) * spacing;
     const startX = centerX - rowWidth / 2;

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "PlinkoCash",
+    "name": "Plinko Cash",
     "slug": "plinkocash",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,6 +8,7 @@
     "scheme": "plinkocash",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "owner": "altomedia",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -15,18 +16,22 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.plinkocash",
+      "bundleIdentifier": "com.altomedia.plinkocash",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       }
     },
     "android": {
-      "package": "com.plinkocash",
+      "package": "com.altomedia.plinkocash",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#07041A"
       },
-      "googleServicesFile": "../../google-services.json"
+      "googleServicesFile": "../../google-services.json",
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/images/icon.png"
@@ -39,7 +44,16 @@
         }
       ],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-6881903056221433~3983256819",
+          "iosAppId": "ca-app-pub-6881903056221433~3983256819",
+          "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+          "skAdNetworkItems": []
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
