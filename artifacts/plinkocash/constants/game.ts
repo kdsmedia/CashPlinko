@@ -83,8 +83,8 @@ export function riggedSlotIndex(naturalIndex: number, slotCount: number): number
   const badIndices = RIGGED_PLINKO_INDICES.filter((i) => i < slotCount);
   if (badIndices.includes(naturalIndex)) return naturalIndex; // already bad
 
-  // 85% chance to redirect to nearest bad slot
-  if (Math.random() < 0.85) {
+  // 50% chance to redirect to nearest bad slot
+  if (Math.random() < 0.50) {
     let nearest = badIndices[0];
     let minDist = Math.abs(naturalIndex - badIndices[0]);
     for (const idx of badIndices) {
