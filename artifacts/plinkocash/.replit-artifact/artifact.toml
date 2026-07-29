@@ -1,0 +1,23 @@
+kind = "mobile"
+previewPath = "/"
+title = "PlinkoCash"
+version = "1.0.0"
+id = "artifacts/plinkocash"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/" ]
+localPort = 24940
+
+[services.development]
+run = "pnpm --filter @workspace/plinkocash run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/plinkocash", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/plinkocash", "run", "serve" ]
+
+[services.env]
+PORT = "24940"
+BASE_PATH = "/"
