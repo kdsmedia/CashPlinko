@@ -60,16 +60,25 @@ export interface Peg {
 export function generatePegs(boardWidth: number, boardHeight: number): Peg[] {
   const pegs: Peg[] = [];
   const ROWS = 12;
-  const TOP = 45;
+  const TOP = 50;
   const BOTTOM_RESERVE = 40;
   const usableH = boardHeight - TOP - BOTTOM_RESERVE;
+  const centerX = boardWidth / 2;
+
+  // Pyramid: row 0 (top) = 2 pegs, row 11 (bottom) = 13 pegs.
+  // All rows share the same horizontal spacing so the shape widens
+  // naturally from a single point at the top to full width at the bottom.
+  const BOTTOM_COUNT = 13;
+  const spacing = boardWidth / (BOTTOM_COUNT + 1);
 
   for (let row = 0; row < ROWS; row++) {
-    const count = row % 2 === 0 ? 9 : 10;
-    const spacing = boardWidth / (count + 1);
+    const count = 2 + row; // 2 … 13
     const y = TOP + (row / (ROWS - 1)) * usableH;
+    const rowWidth = (count - 1) * spacing;
+    const startX = centerX - rowWidth / 2;
+
     for (let col = 0; col < count; col++) {
-      pegs.push({ x: spacing + col * spacing, y });
+      pegs.push({ x: startX + col * spacing, y });
     }
   }
   return pegs;
