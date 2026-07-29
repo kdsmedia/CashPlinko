@@ -25,6 +25,7 @@ import {
   getPrizeColor,
   getPrizeBrightColor,
   getPrizeLabel,
+  riggedSlotIndex,
   Peg,
   BallState,
   Prize,
@@ -35,7 +36,7 @@ import {
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const SLOT_HEIGHT = 36;
-const SLOT_COUNT = PRIZES.length; // 20
+const SLOT_COUNT = PRIZES.length; // 30
 
 interface PlinkoBoardProps {
   boardWidth: number;
@@ -113,10 +114,13 @@ export function PlinkoBoard({
         intervalRef.current = null;
 
         const slotWidth = boardWidth / SLOT_COUNT;
-        const slotIndex = Math.max(
+        const naturalIndex = Math.max(
           0,
           Math.min(SLOT_COUNT - 1, Math.floor(next.x / slotWidth)),
         );
+
+        // Apply rigging: bias toward ads/zonk/small-value slots
+        const slotIndex = riggedSlotIndex(naturalIndex, SLOT_COUNT);
         const prize = PRIZES[slotIndex];
 
         // Brief pause then hide
@@ -191,7 +195,7 @@ export function PlinkoBoard({
                 y={y + SLOT_HEIGHT / 2 + 4}
                 textAnchor="middle"
                 fill={isHighlighted ? '#000' : '#FFFFFF'}
-                fontSize={slotWidth > 22 ? 8 : 7}
+                fontSize={slotWidth > 20 ? 7 : 6}
                 fontWeight="bold"
               >
                 {getPrizeLabel(prize)}

@@ -60,8 +60,10 @@ export default function WithdrawalScreen() {
             setDanaNumber('');
             Alert.alert(
               'Berhasil!',
-              'Permintaan penarikan telah dikirim. Proses 1-3 hari kerja.',
+              'Permintaan penarikan telah dikirim. Akan diproses dalam 24 jam.',
             );
+            // Switch to history tab so user sees the new "Menunggu" record
+            setActiveTab('history');
           },
         },
       ],
@@ -267,31 +269,50 @@ export default function WithdrawalScreen() {
                 </Text>
               </View>
             ) : (
-              withdrawalHistory.map((w) => (
-                <View
-                  key={w.id}
-                  style={[styles.historyItem, { backgroundColor: colors.card, borderColor: colors.border }]}
-                >
-                  <View style={styles.historyLeft}>
-                    <Text style={[styles.historyAmount, { color: colors.gold }]}>
-                      {formatRupiah(w.amount)}
-                    </Text>
-                    <Text style={[styles.historyMeta, { color: colors.mutedForeground }]}>
-                      {w.danaName} · {w.danaNumber}
-                    </Text>
-                    <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
-                      {new Date(w.timestamp).toLocaleDateString('id-ID', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </Text>
+              withdrawalHistory.map((w) => {
+                const isSukses = w.status === 'sukses';
+                return (
+                  <View
+                    key={w.id}
+                    style={[styles.historyItem, { backgroundColor: colors.card, borderColor: colors.border }]}
+                  >
+                    <View style={styles.historyLeft}>
+                      <Text style={[styles.historyAmount, { color: colors.gold }]}>
+                        {formatRupiah(w.amount)}
+                      </Text>
+                      <Text style={[styles.historyMeta, { color: colors.mutedForeground }]}>
+                        {w.danaName} · {w.danaNumber}
+                      </Text>
+                      <Text style={[styles.historyDate, { color: colors.mutedForeground }]}>
+                        {new Date(w.timestamp).toLocaleDateString('id-ID', {
+                          day: '2-digit',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.statusBadge,
+                        {
+                          backgroundColor: isSukses
+                            ? 'rgba(0,180,80,0.15)'
+                            : 'rgba(204,136,0,0.15)',
+                        },
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          styles.statusText,
+                          { color: isSukses ? '#00C853' : '#CC8800' },
+                        ]}
+                      >
+                        {isSukses ? 'SUKSES' : 'MENUNGGU'}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={[styles.statusBadge, { backgroundColor: '#CC880020' }]}>
-                    <Text style={[styles.statusText, { color: '#CC8800' }]}>PENDING</Text>
-                  </View>
-                </View>
-              ))
+                );
+              })
             )}
 
             {/* Game history */}

@@ -11,6 +11,26 @@ env = { "CI" = "true" }
 [workflows]
 runButton = "Project"
 
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "PlinkoCash Expo"
+
+[[workflows.workflow]]
+name = "PlinkoCash Expo"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=24940 pnpm --filter @workspace/plinkocash run dev"
+
 [agent]
 stack = "PNPM_WORKSPACE"
 expertMode = true

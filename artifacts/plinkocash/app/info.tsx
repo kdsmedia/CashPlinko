@@ -25,10 +25,9 @@ Cara bermain:
 • Bola akan memantul melalui paku dan mendarat di kotak hadiah
 • Kumpulkan poin dari hadiah untuk ditukarkan
 • Gunakan Spin Wheel untuk hadiah tambahan
-• Tonton iklan untuk mendapatkan bola gratis
 
 Fitur:
-• 20 kotak hadiah berbeda
+• 30 kotak hadiah berbeda
 • Spin Wheel dengan 10 segmen hadiah
 • Sistem poin & penarikan saldo
 • Jatah 10 bola gratis per hari
@@ -65,16 +64,10 @@ Data yang dikumpulkan:
 Penggunaan data:
 • Data digunakan semata-mata untuk keperluan fungsionalitas aplikasi
 • Kami tidak menjual data pengguna kepada pihak ketiga
-• Data iklan (AdMob) dikelola oleh Google sesuai kebijakan privasi Google
 
 Penyimpanan data:
 • Data permainan tersimpan di perangkat lokal
 • Data penarikan dapat dihapus dengan menghapus aplikasi
-
-Iklan:
-• Aplikasi menggunakan Google AdMob untuk menampilkan iklan
-• AdMob dapat menggunakan identifier perangkat untuk iklan yang relevan
-• Lihat kebijakan privasi Google di: policies.google.com
 
 Hak pengguna:
 • Anda dapat menghapus semua data dengan menghapus dan menginstall ulang aplikasi

@@ -22,7 +22,7 @@ export interface WithdrawalRecord {
   danaName: string;
   danaNumber: string;
   timestamp: number;
-  status: 'pending' | 'processed';
+  status: 'menunggu' | 'sukses';
 }
 
 interface GameContextType {
@@ -47,6 +47,7 @@ interface GameContextType {
 const GameContext = createContext<GameContextType | null>(null);
 
 const STORAGE_KEY = '@plinkocash_state';
+const MS_24H = 24 * 60 * 60 * 1000;
 
 function genId(): string {
   return Date.now().toString() + Math.random().toString(36).substr(2, 9);
@@ -59,6 +60,16 @@ function isSameDay(ts: number): boolean {
     d.getFullYear() === now.getFullYear() &&
     d.getMonth() === now.getMonth() &&
     d.getDate() === now.getDate()
+  );
+}
+
+/** Auto-promote 'menunggu' → 'sukses' if > 24 h old */
+function applyAutoStatus(records: WithdrawalRecord[]): WithdrawalRecord[] {
+  const now = Date.now();
+  return records.map((r) =>
+    r.status === 'menunggu' && now - r.timestamp >= MS_24H
+      ? { ...r, status: 'sukses' as const }
+      : r,
   );
 }
 
@@ -95,7 +106,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             }
             setPoints(saved.points ?? 0);
             setGameHistory(saved.gameHistory ?? []);
-            setWithdrawalHistory(saved.withdrawalHistory ?? []);
+            // Apply auto-status upgrade on load
+            setWithdrawalHistory(applyAutoStatus(saved.withdrawalHistory ?? []));
           } catch {
             setBalls(DAILY_BALLS);
           }
@@ -104,6 +116,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       })
       .catch(() => setIsLoaded(true));
   }, []);
+
+  // Periodically check & promote menunggu → sukses (every 5 min while app is open)
+  useEffect(() => {
+    if (!isLoaded) return;
+    const interval = setInterval(() => {
+      setWithdrawalHistory((prev) => applyAutoStatus(prev));
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [isLoaded]);
 
   // Persist whenever state changes
   const saveRef = useRef({
@@ -172,7 +193,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         id: genId(),
         ...params,
         timestamp: Date.now(),
-        status: 'pending',
+        status: 'menunggu',
       };
       setWithdrawalHistory((h) => [record, ...h].slice(0, 50));
       setPoints((p) => p - params.points);

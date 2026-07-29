@@ -1,8 +1,18 @@
 export type Prize = number | 'ads' | 'zonk';
 
+// 30 prize slots — biased toward zonk/ads/small for rigging
 export const PRIZES: Prize[] = [
-  5, 10, 25, 50, 100, 150, 200, 250, 500, 750,
-  1000, 'ads', 'zonk', 'ads', 'zonk', 5, 10, 20, 15, 'ads',
+  'zonk', 5,    10,   'ads', 'zonk', 5,
+  10,    15,   'ads', 'zonk', 20,   25,
+  50,   'ads', 'zonk', 25,   50,   100,
+  'ads', 'zonk', 150,  200, 'zonk', 250,
+  'ads',  500, 'zonk', 750, 1000, 'ads',
+];
+
+// Indices that count as "bad" (zonk, ads, or ≤ 20 pts)
+// Ball will be steered to these with high probability
+export const RIGGED_PLINKO_INDICES: number[] = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13, 14, 18, 19, 22, 24, 26, 29,
 ];
 
 export interface SpinSegment {
@@ -36,6 +46,7 @@ export const BALLS_PER_AD = 2;
 
 export const ADMOB_APP_ID = 'ca-app-pub-6881903056221433~3983256819';
 export const ADMOB_REWARD_UNIT_ID = 'ca-app-pub-6881903056221433/6525779813';
+export const ADMOB_BANNER_UNIT_ID = 'ca-app-pub-6881903056221433/5160607111';
 
 // Peg physics constants
 export const PEG_RADIUS = 5;
@@ -51,13 +62,14 @@ export interface Peg {
 
 export function generatePegs(boardWidth: number, boardHeight: number): Peg[] {
   const pegs: Peg[] = [];
-  const ROWS = 12;
+  const ROWS = 15;           // More rows for 30 slots
   const TOP = 45;
   const BOTTOM_RESERVE = 40;
   const usableH = boardHeight - TOP - BOTTOM_RESERVE;
 
   for (let row = 0; row < ROWS; row++) {
-    const count = row % 2 === 0 ? 9 : 10;
+    // More pegs per row so ball has 30 paths
+    const count = row % 2 === 0 ? 12 : 13;
     const spacing = boardWidth / (count + 1);
     const y = TOP + (row / (ROWS - 1)) * usableH;
     for (let col = 0; col < count; col++) {
@@ -65,6 +77,27 @@ export function generatePegs(boardWidth: number, boardHeight: number): Peg[] {
     }
   }
   return pegs;
+}
+
+/**
+ * Rig the landed slot toward a "bad" prize (ads/zonk/small).
+ * With 85% probability, redirect to the nearest bad slot.
+ */
+export function riggedSlotIndex(naturalIndex: number, slotCount: number): number {
+  const badIndices = RIGGED_PLINKO_INDICES.filter((i) => i < slotCount);
+  if (badIndices.includes(naturalIndex)) return naturalIndex; // already bad
+
+  // 85% chance to redirect to nearest bad slot
+  if (Math.random() < 0.85) {
+    let nearest = badIndices[0];
+    let minDist = Math.abs(naturalIndex - badIndices[0]);
+    for (const idx of badIndices) {
+      const d = Math.abs(naturalIndex - idx);
+      if (d < minDist) { minDist = d; nearest = idx; }
+    }
+    return nearest;
+  }
+  return naturalIndex;
 }
 
 export interface BallState {

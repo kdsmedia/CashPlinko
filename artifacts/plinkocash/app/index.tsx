@@ -23,9 +23,12 @@ import { PlinkoBoard } from '@/components/PlinkoBoard';
 import { SpinWheelModal } from '@/components/SpinWheelModal';
 import { AddBallsModal } from '@/components/AddBallsModal';
 import { WinCelebration } from '@/components/WinCelebration';
+import { SplashLoading } from '@/components/SplashLoading';
+import { AdBanner } from '@/components/AdBanner';
 import { Prize } from '@/constants/game';
 
-const HEADER_HEIGHT = 60;
+const HEADER_HEIGHT = 52;
+const BANNER_HEIGHT = 50;
 const CONTROLS_HEIGHT = 80;
 
 export default function GameScreen() {
@@ -41,8 +44,9 @@ export default function GameScreen() {
 
   const boardWidth = screenW;
   const boardHeight =
-    screenH - topPad - HEADER_HEIGHT - CONTROLS_HEIGHT - bottomPad;
+    screenH - topPad - HEADER_HEIGHT - BANNER_HEIGHT - CONTROLS_HEIGHT - bottomPad;
 
+  const [showSplash, setShowSplash] = useState(true);
   const [dropTrigger, setDropTrigger] = useState(0);
   const [isDropping, setIsDropping] = useState(false);
   const [autoMode, setAutoMode] = useState(false);
@@ -126,10 +130,17 @@ export default function GameScreen() {
     }
   }, [balls, autoMode]);
 
+  // Show splash until both data is loaded AND 10s have passed
+  // isLoaded gates the game content; SplashLoading handles the 10s timer
+  const handleSplashFinished = useCallback(() => {
+    setShowSplash(false);
+  }, []);
+
   if (!isLoaded) {
+    // Data not loaded yet — show splash unconditionally until data + timer done
     return (
-      <View style={[styles.loadingView, { backgroundColor: colors.background }]}>
-        <ActivityIndicator color={colors.gold} size="large" />
+      <View style={[styles.container, { backgroundColor: '#000' }]}>
+        <SplashLoading onFinished={() => {}} />
       </View>
     );
   }
@@ -143,7 +154,7 @@ export default function GameScreen() {
         end={{ x: 0.5, y: 1 }}
       />
 
-      {/* Header */}
+      {/* Header — icons only, no brand name */}
       <GameHeader onOpenSpin={() => setShowSpin(true)} onOpenBalls={() => setShowBalls(true)} />
 
       {/* Board */}
@@ -162,6 +173,9 @@ export default function GameScreen() {
           onDone={() => setShowWin(false)}
         />
       </View>
+
+      {/* AdMob Banner above controls */}
+      <AdBanner />
 
       {/* Controls */}
       <View
@@ -267,6 +281,9 @@ export default function GameScreen() {
           </View>
         </View>
       </Modal>
+
+      {/* 10-second splash overlay — shown on first load */}
+      {showSplash && <SplashLoading onFinished={handleSplashFinished} />}
     </View>
   );
 }
@@ -274,11 +291,6 @@ export default function GameScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  loadingView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   boardContainer: {
     flex: 1,
