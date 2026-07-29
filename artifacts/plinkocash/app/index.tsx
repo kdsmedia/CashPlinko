@@ -46,7 +46,10 @@ export default function GameScreen() {
   const boardHeight =
     screenH - topPad - HEADER_HEIGHT - BANNER_HEIGHT - CONTROLS_HEIGHT - bottomPad;
 
-  const [showSplash, setShowSplash] = useState(true);
+  // Single source of truth: show splash until BOTH conditions are satisfied.
+  // minDelayDone: 10s timer fired; isLoaded: AsyncStorage data ready.
+  const [minDelayDone, setMinDelayDone] = useState(false);
+  const showSplash = !minDelayDone || !isLoaded;
   const [dropTrigger, setDropTrigger] = useState(0);
   const [isDropping, setIsDropping] = useState(false);
   const [autoMode, setAutoMode] = useState(false);
@@ -130,18 +133,13 @@ export default function GameScreen() {
     }
   }, [balls, autoMode]);
 
-  // Show splash until both data is loaded AND 10s have passed
-  // isLoaded gates the game content; SplashLoading handles the 10s timer
-  const handleSplashFinished = useCallback(() => {
-    setShowSplash(false);
-  }, []);
-
-  if (!isLoaded) {
-    // Data not loaded yet — show splash unconditionally until data + timer done
+  // Show splash until BOTH: (a) 10s timer fired via SplashLoading.onFinished,
+  // AND (b) AsyncStorage data is ready (isLoaded from GameContext).
+  // SplashLoading owns the 10s countdown; its onFinished sets minDelayDone.
+  // Game content does NOT mount until showSplash is false.
+  if (showSplash) {
     return (
-      <View style={[styles.container, { backgroundColor: '#000' }]}>
-        <SplashLoading onFinished={() => {}} />
-      </View>
+      <SplashLoading onFinished={() => setMinDelayDone(true)} />
     );
   }
 
@@ -282,8 +280,6 @@ export default function GameScreen() {
         </View>
       </Modal>
 
-      {/* 10-second splash overlay — shown on first load */}
-      {showSplash && <SplashLoading onFinished={handleSplashFinished} />}
     </View>
   );
 }
