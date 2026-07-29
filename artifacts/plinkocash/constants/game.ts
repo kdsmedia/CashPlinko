@@ -47,7 +47,7 @@ export const ADMOB_BANNER_UNIT_ID = 'ca-app-pub-6881903056221433/5160607111';
 
 // Peg physics constants
 export const PEG_RADIUS = 5;
-export const BALL_RADIUS = 9;
+export const BALL_RADIUS = 6;
 export const GRAVITY = 0.28;
 export const RESTITUTION = 0.52;
 export const FRICTION = 0.997;
