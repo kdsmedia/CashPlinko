@@ -27,7 +27,7 @@ Cara bermain:
 • Gunakan Spin Wheel untuk hadiah tambahan
 
 Fitur:
-• 30 kotak hadiah berbeda
+• 20 kotak hadiah berbeda
 • Spin Wheel dengan 10 segmen hadiah
 • Sistem poin & hadiah
 • Jatah 10 bola gratis per hari
@@ -59,7 +59,6 @@ Semua hasil permainan bersifat acak. Keberhasilan mendapatkan hadiah tidak dijam
 
 Data yang dikumpulkan:
 • Data permainan (poin, riwayat, bola) disimpan lokal di perangkat Anda
-• Google AdMob dapat mengumpulkan Advertising ID untuk iklan yang relevan
 
 Penggunaan data:
 • Data digunakan semata-mata untuk keperluan fungsionalitas aplikasi
@@ -73,7 +72,7 @@ Hak pengguna:
 • Anda dapat menghapus semua data dengan menghapus dan menginstall ulang aplikasi
 
 Kontak:
-• Email: altomedia.dev@gmail.com
+• Email: altomediaindonesia@gmail.com
 • Versi kebijakan: 1.0 (Juli 2026)`,
   },
 };
