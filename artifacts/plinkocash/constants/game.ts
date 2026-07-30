@@ -2,8 +2,8 @@ export type Prize = number | 'ads' | 'zonk';
 
 // 20 prize slots — biased toward zonk/ads/small for rigging
 export const PRIZES: Prize[] = [
-  5, 10, 25, 50, 100, 150, 200, 250, 500, 750,
-  1000, 'ads', 'zonk', 'ads', 'zonk', 5, 10, 20, 15, 'ads',
+  5, 10, zonk, 50, 100, 150, ads, 250, 500, 750,
+  1000, 'ads', '25', '200', 'zonk', 5, 10, 20, 15, 'ads',
 ];
 
 // Indices that are "lose" slots (zonk, small pts ≤15, and ads).
