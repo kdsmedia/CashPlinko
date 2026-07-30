@@ -1,9 +1,8 @@
-# APK dan AAB didownload dari EAS setelah build selesai
-# Pantau progress build di: https://expo.dev/accounts/altomedia/projects/plinkocash/builds
-# 
-# Setelah build selesai:
-# 1. Download plinkocash-v1.0.0.apk  → taruh di folder ini
-# 2. Download plinkocash-v1.0.0.aab  → taruh di folder ini
-#
-# Build APK  : profile "preview"        → distributable APK
-# Build AAB  : profile "production-aab" → untuk upload Play Console
+Download APK dan AAB dari EAS setelah build selesai:
+
+AAB (Play Store): https://expo.dev/accounts/altomedia/projects/plinkocash/builds/4423484a-d795-4c69-a201-b939f8936d3c
+APK (Testing):    https://expo.dev/accounts/altomedia/projects/plinkocash/builds/05f487df-b2b6-4708-b562-c7ecd8f3b9f3
+
+Simpan file yang didownload sebagai:
+- plinkocash-v1.0.0.aab
+- plinkocash-v1.0.0.apk

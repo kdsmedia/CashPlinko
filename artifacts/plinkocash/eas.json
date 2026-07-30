@@ -24,8 +24,7 @@
     "production-aab": {
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle",
-        "credentialSource": "local"
+        "buildType": "app-bundle"
       },
       "env": {
         "APP_ENV": "production"
@@ -34,8 +33,7 @@
     "production": {
       "distribution": "internal",
       "android": {
-        "buildType": "apk",
-        "credentialSource": "local"
+        "buildType": "apk"
       },
       "env": {
         "APP_ENV": "production"
