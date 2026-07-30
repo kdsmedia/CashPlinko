@@ -29,7 +29,7 @@ Cara bermain:
 Fitur:
 • 30 kotak hadiah berbeda
 • Spin Wheel dengan 10 segmen hadiah
-• Sistem poin & penarikan saldo
+• Sistem poin & hadiah
 • Jatah 10 bola gratis per hari
 • Mode AUTO untuk drop otomatis
 
@@ -42,9 +42,8 @@ Paket: com.plinkocash`,
     body: `PlinkoCash adalah aplikasi hiburan semata.
 
 PENTING:
-• Hadiah dalam aplikasi ini berupa poin virtual yang dapat ditukarkan dengan nilai nominal kecil
-• Nilai tukar: 1.000 poin = Rp 10
-• Proses penarikan memerlukan 1-3 hari kerja
+• Hadiah dalam aplikasi ini berupa poin virtual
+• Permainan ini ditujukan untuk hiburan semata
 • Tidak ada jaminan keuntungan dari bermain game ini
 • Permainan ini ditujukan untuk hiburan, bukan investasi
 • Pengguna di bawah umur 17 tahun dilarang bermain
@@ -59,22 +58,22 @@ Semua hasil permainan bersifat acak. Keberhasilan mendapatkan hadiah tidak dijam
 
 Data yang dikumpulkan:
 • Data permainan (poin, riwayat, bola) disimpan lokal di perangkat Anda
-• Data penarikan (nama DANA, nomor HP) diperlukan untuk memproses penarikan
+• Google AdMob dapat mengumpulkan Advertising ID untuk iklan yang relevan
 
 Penggunaan data:
 • Data digunakan semata-mata untuk keperluan fungsionalitas aplikasi
 • Kami tidak menjual data pengguna kepada pihak ketiga
 
 Penyimpanan data:
-• Data permainan tersimpan di perangkat lokal
-• Data penarikan dapat dihapus dengan menghapus aplikasi
+• Semua data permainan tersimpan di perangkat lokal Anda
+• Data dapat dihapus dengan menghapus aplikasi
 
 Hak pengguna:
 • Anda dapat menghapus semua data dengan menghapus dan menginstall ulang aplikasi
 
 Kontak:
-• Email: support@plinkocash.com
-• Versi kebijakan: 1.0 (Juli 2025)`,
+• Email: altomedia.dev@gmail.com
+• Versi kebijakan: 1.0 (Juli 2026)`,
   },
 };
 

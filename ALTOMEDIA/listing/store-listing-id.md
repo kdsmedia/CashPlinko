@@ -4,12 +4,12 @@
 Plinko Cash - Kumpulkan Poin
 
 ## Deskripsi Singkat (maks 80 karakter)
-Jatuhkan bola, kumpulkan poin, tukarkan hadiah nyata ke DANA!
+Jatuhkan bola, kumpulkan poin, dan raih hadiah seru setiap hari!
 
 ## Deskripsi Lengkap (maks 4000 karakter)
-🎯 PLINKO CASH — Game Plinko Seru dengan Hadiah Nyata!
+🎯 PLINKO CASH — Game Plinko Seru dengan Hadiah Menarik!
 
-Rasakan sensasi game Plinko klasik yang kini hadir di genggaman kamu! Jatuhkan bola, saksikan bola melompat melewati ratusan pasak, dan raih poin besar yang bisa ditukarkan ke saldo DANA kamu!
+Rasakan sensasi game Plinko klasik yang kini hadir di genggaman kamu! Jatuhkan bola, saksikan bola melompat melewati ratusan pasak, dan raih poin besar setiap harinya!
 
 🏆 CARA BERMAIN
 • Ketuk DROP untuk menjatuhkan bola dari atas papan
@@ -23,12 +23,6 @@ Rasakan sensasi game Plinko klasik yang kini hadir di genggaman kamu! Jatuhkan b
 • Putar Roda Keberuntungan untuk hadiah ekstra
 • Tonton iklan untuk dapat bola tambahan
 
-🎁 CARA TUKAR HADIAH
-1. Kumpulkan poin dari bermain
-2. Buka menu Penarikan
-3. Masukkan nama & nomor DANA
-4. Tunggu konfirmasi dalam 24 jam
-
 ⚡ FITUR UNGGULAN
 ✅ Fisika bola yang realistis & seru
 ✅ Mode AUTO — bola jatuh otomatis terus-menerus
@@ -41,13 +35,13 @@ Rasakan sensasi game Plinko klasik yang kini hadir di genggaman kamu! Jatuhkan b
 🔒 AMAN & TERPERCAYA
 Dikembangkan oleh ALTOMEDIA. Game ini menggunakan iklan untuk mendukung operasional dan memungkinkan pengguna mendapatkan hadiah gratis.
 
-Unduh sekarang dan mulai perjalanan menuju hadiah nyata! 🎰
+Unduh sekarang dan mulai kumpulkan poin! 🎰
 
 ## Kategori
 Games > Casual
 
 ## Tag / Keyword
-plinko, game hadiah, kumpulkan poin, dana, game seru, plinko cash, hadiah gratis, game android
+plinko, game poin, kumpulkan poin, game seru, plinko cash, hadiah gratis, game android, casual
 
 ## Rating Konten
 Everyone (Semua Umur) — Simulasi Judi Ringan
