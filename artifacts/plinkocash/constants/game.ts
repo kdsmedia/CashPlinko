@@ -21,22 +21,25 @@ export interface SpinSegment {
   points?: number;
 }
 
+// Segment order matches the wheel image (clockwise from 12 o'clock):
+// 10(green), 25(blue), +1BOLA, +2BOLA, ZONK, 100(gold), ZONK, +5BOLA, ZONK, 50(orange)
 export const SPIN_SEGMENTS: SpinSegment[] = [
-  { label: '50', value: 50, color: '#FF6B00', points: 50 },
-  { label: 'ZONK', value: 'zonk', color: '#3A3A5C' },
-  { label: '10', value: 10, color: '#00AA44', points: 10 },
-  { label: '25', value: 25, color: '#0099DD', points: 25 },
-  { label: '+1 BOLA', value: 'ball1', color: '#8800DD', balls: 1 },
-  { label: '+2 BOLA', value: 'ball2', color: '#6600BB', balls: 2 },
-  { label: 'ZONK', value: 'zonk', color: '#3A3A5C' },
-  { label: '100', value: 100, color: '#FFD700', points: 100 },
-  { label: '+5 BOLA', value: 'ball5', color: '#4400AA', balls: 5 },
-  { label: 'ZONK', value: 'zonk', color: '#3A3A5C' },
+  { label: '10',     value: 10,      color: '#00AA44', points: 10 },   // 0 — top (green)
+  { label: '25',     value: 25,      color: '#0099DD', points: 25 },   // 1 — blue
+  { label: '+1 BOLA', value: 'ball1', color: '#8800DD', balls: 1 },    // 2 — purple
+  { label: '+2 BOLA', value: 'ball2', color: '#5500AA', balls: 2 },    // 3 — dark purple
+  { label: 'ZONK',   value: 'zonk',  color: '#3A3A5C' },               // 4
+  { label: '100',    value: 100,     color: '#FFD700', points: 100 },  // 5 — gold (bottom)
+  { label: 'ZONK',   value: 'zonk',  color: '#3A3A5C' },               // 6
+  { label: '+5 BOLA', value: 'ball5', color: '#3300AA', balls: 5 },    // 7
+  { label: 'ZONK',   value: 'zonk',  color: '#3A3A5C' },               // 8
+  { label: '50',     value: 50,      color: '#FF6B00', points: 50 },   // 9 — orange
 ];
 
 // Spin win/lose pools for 30% win rate
-export const SPIN_WIN_INDICES = [0, 3, 4, 5, 7, 8]; // 50pts, 25pts, +1bola, +2bola, 100pts, +5bola
-export const SPIN_LOSE_INDICES = [1, 2, 6, 9];       // ZONK, 10pts, ZONK, ZONK
+// Win = prizes worth claiming (25+, any balls)
+export const SPIN_WIN_INDICES = [1, 2, 3, 5, 7, 9]; // 25pts, +1BOLA, +2BOLA, 100pts, +5BOLA, 50pts
+export const SPIN_LOSE_INDICES = [0, 4, 6, 8];       // 10pts (small), ZONK × 3
 
 /** Returns a rigged spin index: 30% win, 70% lose. */
 export function riggedSpinIndex(): number {

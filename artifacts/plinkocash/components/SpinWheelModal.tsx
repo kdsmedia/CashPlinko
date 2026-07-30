@@ -8,39 +8,23 @@ import {
   Animated,
   Easing,
   ActivityIndicator,
+  Image,
 } from 'react-native';
-import Svg, { Path, Circle, Text as SvgText } from 'react-native-svg';
 import { useColors } from '@/hooks/useColors';
 import { SPIN_SEGMENTS, riggedSpinIndex } from '@/constants/game';
 import { useAdReward } from '@/hooks/useAdReward';
 import { useGame } from '@/context/GameContext';
+
+const WHEEL_IMAGE = require('@/assets/images/spinwheel.png');
 
 interface SpinWheelModalProps {
   visible: boolean;
   onClose: () => void;
 }
 
-const WHEEL_SIZE = 280;
-const CX = WHEEL_SIZE / 2;
-const CY = WHEEL_SIZE / 2;
-const R = CX - 8;
+const WHEEL_SIZE = 300;
 const SEG_COUNT = SPIN_SEGMENTS.length;
-const SEG_ANGLE = 360 / SEG_COUNT;
-
-function polarToXY(angleDeg: number, radius: number) {
-  const rad = ((angleDeg - 90) * Math.PI) / 180;
-  return {
-    x: CX + radius * Math.cos(rad),
-    y: CY + radius * Math.sin(rad),
-  };
-}
-
-function slicePath(startAngle: number, endAngle: number): string {
-  const s = polarToXY(startAngle, R);
-  const e = polarToXY(endAngle, R);
-  const large = endAngle - startAngle > 180 ? 1 : 0;
-  return `M ${CX} ${CY} L ${s.x} ${s.y} A ${R} ${R} 0 ${large} 1 ${e.x} ${e.y} Z`;
-}
+const SEG_ANGLE = 360 / SEG_COUNT; // 36° per segment
 
 export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
   const colors = useColors();
@@ -62,8 +46,14 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
     setClaimed(false);
     setIsSpinning(true);
 
+    // Pick rigged target segment (30% win, 70% lose)
     const targetIdx = riggedSpinIndex();
+
+    // Mid-angle of the target segment in the image (clockwise from top)
+    // Segment 0 center = 18°, segment 1 = 54°, etc.
     const segMid = targetIdx * SEG_ANGLE + SEG_ANGLE / 2;
+
+    // Total rotation: full spins + alignment to bring segMid to the top pointer
     const spins = 8 + Math.floor(Math.random() * 4);
     const stopAt = spins * 360 + (360 - segMid);
     const finalAngle = currentAngle.current + stopAt;
@@ -104,6 +94,7 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
     }, 1200);
   };
 
+  // Interpolate rotation degrees — extrapolate:'extend' handles large accumulated values
   const rotate = rotation.interpolate({
     inputRange: [0, 360],
     outputRange: ['0deg', '360deg'],
@@ -115,6 +106,7 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+
           {/* Header */}
           <View style={styles.header}>
             <Text style={[styles.title, { color: colors.gold }]}>SPIN WHEEL</Text>
@@ -125,43 +117,20 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
             )}
           </View>
 
-          {/* Wheel */}
+          {/* Wheel + pointer */}
           <View style={styles.wheelWrap}>
-            {/* Pointer */}
-            <View style={[styles.pointer, { borderBottomColor: colors.gold }]} />
+            {/* Gold triangle pointer */}
+            <View style={styles.pointerOuter}>
+              <View style={[styles.pointer, { borderBottomColor: '#FFD700' }]} />
+            </View>
 
-            <Animated.View style={{ transform: [{ rotate }] }}>
-              <Svg width={WHEEL_SIZE} height={WHEEL_SIZE}>
-                <Circle cx={CX} cy={CY} r={R + 4} fill="#1A0E3A" />
-                {SPIN_SEGMENTS.map((seg, i) => {
-                  const start = i * SEG_ANGLE;
-                  const end = (i + 1) * SEG_ANGLE;
-                  const mid = start + SEG_ANGLE / 2;
-                  const lp = polarToXY(mid, R * 0.65);
-                  return (
-                    <React.Fragment key={i}>
-                      <Path
-                        d={slicePath(start, end)}
-                        fill={seg.color}
-                        stroke="#07041A"
-                        strokeWidth="1.5"
-                      />
-                      <SvgText
-                        x={lp.x}
-                        y={lp.y + 4}
-                        textAnchor="middle"
-                        fill="#FFFFFF"
-                        fontSize={seg.label.length > 4 ? 7 : 9}
-                        fontWeight="bold"
-                      >
-                        {seg.label}
-                      </SvgText>
-                    </React.Fragment>
-                  );
-                })}
-                <Circle cx={CX} cy={CY} r={14} fill="#07041A" />
-                <Circle cx={CX} cy={CY} r={10} fill={colors.gold} />
-              </Svg>
+            {/* Rotating wheel image */}
+            <Animated.View style={[styles.wheelContainer, { transform: [{ rotate }] }]}>
+              <Image
+                source={WHEEL_IMAGE}
+                style={styles.wheelImage}
+                resizeMode="contain"
+              />
             </Animated.View>
           </View>
 
@@ -174,7 +143,7 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
             </View>
           )}
           {claimed && (
-            <Text style={[styles.wonText, { color: colors.success, textAlign: 'center' }]}>
+            <Text style={[styles.wonText, { color: colors.success, textAlign: 'center', marginBottom: 8 }]}>
               ✓ Hadiah diklaim!
             </Text>
           )}
@@ -215,6 +184,7 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
               <ActivityIndicator color={colors.gold} size="large" />
             )}
           </View>
+
         </View>
       </View>
     </Modal>
@@ -240,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   title: {
     fontSize: 22,
@@ -257,19 +227,37 @@ const styles = StyleSheet.create({
   wheelWrap: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16,
+    marginBottom: 14,
+  },
+  pointerOuter: {
+    position: 'absolute',
+    top: -2,
+    zIndex: 10,
+    alignItems: 'center',
   },
   pointer: {
-    position: 'absolute',
-    top: -6,
-    zIndex: 10,
     width: 0,
     height: 0,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    borderBottomWidth: 20,
+    borderLeftWidth: 11,
+    borderRightWidth: 11,
+    borderBottomWidth: 22,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
+    // shadow for pointer
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.6,
+    shadowRadius: 3,
+  },
+  wheelContainer: {
+    width: WHEEL_SIZE,
+    height: WHEEL_SIZE,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wheelImage: {
+    width: WHEEL_SIZE,
+    height: WHEEL_SIZE,
   },
   wonBadge: {
     borderWidth: 1.5,
@@ -277,6 +265,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     marginBottom: 12,
+    alignItems: 'center',
   },
   wonText: {
     fontSize: 16,
