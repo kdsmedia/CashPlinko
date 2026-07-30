@@ -174,7 +174,7 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
                   </View>
                 ) : (
                   <Text style={styles.spinBtnText}>
-                    {wonSeg?.value === 'zonk' ? 'OK' : '📺 KLAIM HADIAH'}
+                    {wonSeg?.value === 'zonk' ? 'OK' : 'KLAIM HADIAH'}
                   </Text>
                 )}
               </TouchableOpacity>
