@@ -6,10 +6,11 @@ export const PRIZES: Prize[] = [
   1000, 'ads', 'zonk', 'ads', 'zonk', 5, 10, 20, 15, 'ads',
 ];
 
-// Indices that count as "bad" (zonk, ads, or ≤ 15 pts)
-// Ball will be steered to these with high probability
+// Indices that count as "bad" for rigging purposes (zonk or ≤ 15 pts only).
+// 'ads' slots are intentionally excluded so rigging never forces an ads popup —
+// ads appears only when the ball naturally lands on that slot.
 export const RIGGED_PLINKO_INDICES: number[] = [
-  0, 1, 11, 12, 13, 14, 15, 16, 18, 19,
+  0, 1, 12, 14, 15, 16, 18,
 ];
 
 export interface SpinSegment {
