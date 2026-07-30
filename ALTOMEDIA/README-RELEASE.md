@@ -12,11 +12,17 @@
 
 | Tipe | Profile | Status | Link |
 |------|---------|--------|------|
-| AAB (Play Store) | `production-aab` | ⏳ Building | https://expo.dev/accounts/altomedia/projects/plinkocash/builds/4423484a-d795-4c69-a201-b939f8936d3c |
-| APK (Testing) | `production` | ⏳ Building | https://expo.dev/accounts/altomedia/projects/plinkocash/builds/05f487df-b2b6-4708-b562-c7ecd8f3b9f3 |
+| AAB (Play Store) | `production-aab` | ⏳ Building | https://expo.dev/accounts/altomedia/projects/plinkocash/builds/1e2283e3-ab22-410f-a4b6-ffca828e8200 |
+| APK (Testing) | `production` | ⏳ Building | https://expo.dev/accounts/altomedia/projects/plinkocash/builds/f0a4d754-1301-447e-b435-419791f3e3cd |
 
 > Build estimasi selesai ~15–20 menit. Pantau di dashboard Expo.  
 > Setelah selesai, download dan simpan ke folder `release/`.
+
+### Build Sebelumnya (v1.0.0 - July 2026)
+| Tipe | Link Lama |
+|------|-----------|
+| AAB | https://expo.dev/accounts/altomedia/projects/plinkocash/builds/4423484a-d795-4c69-a201-b939f8936d3c |
+| APK | https://expo.dev/accounts/altomedia/projects/plinkocash/builds/05f487df-b2b6-4708-b562-c7ecd8f3b9f3 |
 
 **Credentials:** EAS menggunakan keystore yang di-manage cloud (Build Credentials Te5rW5VXhg).  
 File `plinkocash.keystore` di folder `release/` adalah backup lokal — simpan dengan aman.
