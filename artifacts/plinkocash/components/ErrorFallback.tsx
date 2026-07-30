@@ -11,7 +11,6 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '@/hooks/useColors';
 import { Feather } from '@expo/vector-icons';
-import { reloadAppAsync } from 'expo';
 
 export type ErrorFallbackProps = {
   error: Error;
@@ -24,13 +23,8 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleRestart = async () => {
-    try {
-      await reloadAppAsync();
-    } catch (restartError) {
-      console.error('Failed to restart app:', restartError);
-      resetError();
-    }
+  const handleRestart = () => {
+    resetError();
   };
 
   const formatErrorDetails = (): string => {

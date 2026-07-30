@@ -6,11 +6,11 @@ export const PRIZES: Prize[] = [
   1000, 'ads', 'zonk', 'ads', 'zonk', 5, 10, 20, 15, 'ads',
 ];
 
-// Indices that count as "bad" for rigging purposes (zonk or ≤ 15 pts only).
-// 'ads' slots are intentionally excluded so rigging never forces an ads popup —
-// ads appears only when the ball naturally lands on that slot.
+// Indices that are "lose" slots (zonk, small pts ≤15, and ads).
+// Used by riggedSlotIndex to redirect win-slot landings.
+// Win slots: [2,3,4,5,6,7,8,9,10,17] → prizes ≥ 20 pts
 export const RIGGED_PLINKO_INDICES: number[] = [
-  0, 1, 12, 14, 15, 16, 18,
+  0, 1, 11, 12, 13, 14, 15, 16, 18, 19,
 ];
 
 export interface SpinSegment {
@@ -34,8 +34,17 @@ export const SPIN_SEGMENTS: SpinSegment[] = [
   { label: 'ZONK', value: 'zonk', color: '#3A3A5C' },
 ];
 
-// Rigged: always land on these indices (zonk or value=10)
-export const RIGGED_SPIN_INDICES = [1, 2, 6, 9];
+// Spin win/lose pools for 30% win rate
+export const SPIN_WIN_INDICES = [0, 3, 4, 5, 7, 8]; // 50pts, 25pts, +1bola, +2bola, 100pts, +5bola
+export const SPIN_LOSE_INDICES = [1, 2, 6, 9];       // ZONK, 10pts, ZONK, ZONK
+
+/** Returns a rigged spin index: 30% win, 70% lose. */
+export function riggedSpinIndex(): number {
+  if (Math.random() < 0.30) {
+    return SPIN_WIN_INDICES[Math.floor(Math.random() * SPIN_WIN_INDICES.length)];
+  }
+  return SPIN_LOSE_INDICES[Math.floor(Math.random() * SPIN_LOSE_INDICES.length)];
+}
 
 export const DAILY_BALLS = 10;
 export const POINTS_PER_BALL_PACK = 50;
@@ -91,24 +100,26 @@ export function generatePegs(boardWidth: number, boardHeight: number): Peg[] {
 }
 
 /**
- * Rig the landed slot toward a "bad" prize (ads/zonk/small).
- * With 85% probability, redirect to the nearest bad slot.
+ * Rig the landed slot for ~30% win rate.
+ * Win slots (prizes ≥ 20 pts) are kept with 60% probability;
+ * 40% of the time they are redirected to the nearest lose slot.
+ * Lose slots (zonk / ads / small pts) are never upgraded.
  */
 export function riggedSlotIndex(naturalIndex: number, slotCount: number): number {
-  const badIndices = RIGGED_PLINKO_INDICES.filter((i) => i < slotCount);
-  if (badIndices.includes(naturalIndex)) return naturalIndex; // already bad
+  const loseIndices = RIGGED_PLINKO_INDICES.filter((i) => i < slotCount);
+  if (loseIndices.includes(naturalIndex)) return naturalIndex; // already a lose slot
 
-  // 50% chance to redirect to nearest bad slot
-  if (Math.random() < 0.50) {
-    let nearest = badIndices[0];
-    let minDist = Math.abs(naturalIndex - badIndices[0]);
-    for (const idx of badIndices) {
-      const d = Math.abs(naturalIndex - idx);
-      if (d < minDist) { minDist = d; nearest = idx; }
-    }
-    return nearest;
+  // Ball landed on a win slot — keep 60% of the time → ~30% overall win rate
+  if (Math.random() < 0.60) return naturalIndex;
+
+  // Redirect to the nearest lose slot
+  let nearest = loseIndices[0];
+  let minDist = Math.abs(naturalIndex - loseIndices[0]);
+  for (const idx of loseIndices) {
+    const d = Math.abs(naturalIndex - idx);
+    if (d < minDist) { minDist = d; nearest = idx; }
   }
-  return naturalIndex;
+  return nearest;
 }
 
 export interface BallState {

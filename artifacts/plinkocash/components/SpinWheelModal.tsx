@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Svg, { Path, Circle, Text as SvgText } from 'react-native-svg';
 import { useColors } from '@/hooks/useColors';
-import { SPIN_SEGMENTS, RIGGED_SPIN_INDICES } from '@/constants/game';
+import { SPIN_SEGMENTS, riggedSpinIndex } from '@/constants/game';
 import { useAdReward } from '@/hooks/useAdReward';
 import { useGame } from '@/context/GameContext';
 
@@ -62,7 +62,7 @@ export function SpinWheelModal({ visible, onClose }: SpinWheelModalProps) {
     setClaimed(false);
     setIsSpinning(true);
 
-    const targetIdx = RIGGED_SPIN_INDICES[Math.floor(Math.random() * RIGGED_SPIN_INDICES.length)];
+    const targetIdx = riggedSpinIndex();
     const segMid = targetIdx * SEG_ANGLE + SEG_ANGLE / 2;
     const spins = 8 + Math.floor(Math.random() * 4);
     const stopAt = spins * 360 + (360 - segMid);

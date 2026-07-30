@@ -57,7 +57,7 @@ AdMob IDs:
 
 ## User preferences
 
-- Push every update to GitHub repository (origin: https://github.com/kdsmedia/CashPlinko)
+- Push every update to GitHub repository (origin: https://github.com/kdsmedia/CashPlinko) — commit and push after every change
 - App name: PlinkoCash, package: com.plinkocash
 - Language: Indonesian (UI labels, alerts, error messages)
 - Always full-screen portrait game layout — no header chrome on game screen
