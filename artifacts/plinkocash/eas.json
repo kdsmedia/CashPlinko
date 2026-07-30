@@ -21,6 +21,15 @@
         "APP_ENV": "preview"
       }
     },
+    "production-aab": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "APP_ENV": "production"
+      }
+    },
     "production": {
       "distribution": "internal",
       "android": {

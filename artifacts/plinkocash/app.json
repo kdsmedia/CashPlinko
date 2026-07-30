@@ -23,6 +23,10 @@
     },
     "android": {
       "package": "com.altomedia.plinkocash",
+      "versionCode": 1,
+      "compileSdkVersion": 35,
+      "targetSdkVersion": 35,
+      "minSdkVersion": 26,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#07041A"
