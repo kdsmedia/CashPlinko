@@ -1,3 +1,5 @@
+push update commit ke repositori setiap melakukan perubahan pada kode aplikasi ini!
+
 build ulang dan hasilkan apk,aab dan jks yang siap di build di playconsole.
 jangan lupa perpanjang teks privacy policy agar lebih detail namun jangan bahas tentang penarikan.
 
