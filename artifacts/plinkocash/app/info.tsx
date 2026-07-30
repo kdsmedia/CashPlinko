@@ -34,7 +34,8 @@ Fitur:
 • Mode AUTO untuk drop otomatis
 
 Versi: 1.0.0
-Paket: com.plinkocash`,
+Paket: com.altomedia.plinkocash
+Developer: ALTOMEDIA`,
   },
   disclaimer: {
     title: 'Disclaimer',
