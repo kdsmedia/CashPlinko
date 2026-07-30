@@ -1,19 +1,6 @@
+build ulang dan hasilkan apk,aab dan jks yang siap di build di playconsole.
+jangan lupa perpanjang teks privacy policy agar lebih detail namun jangan bahas tentang penarikan.
 
-‎Sempurnakan dengan benar !!! lalu build apk,aab dan jks, setelah itu buatkan folder ALTOMEDIA, dan buat paket rilis yang benar benar lengkap siap upload rilis di playconsole, masukan paket lengkap tersebut ke dalam folder ALTOMEDIA,paket rilis harus lengkap termasuk gambar listing tolong generate lengkap semua gambar dan seluruh persyaratan rilis harus lengkap sesuai persyaratan dan minimum android pada playconsole saat ini
-‎
-‎
- gunakan token expo: 5FtFvMWBpcRT9g-Q_8HkapNu9UP00QDkgxdpjE-r
+tambahkan dan buatkan file txt yang berisi Postingan artikel blog yang membahas tentang aplikasi ini beserta gambar dan detail lengkap postingan blog nya!
 
-
-
-‎Appname: Plinko Cash
-‎Packagename: com.altomedia.plinkocash
-‎Developer: ALTOMEDIA
-‎
-‎
-‎Admob
-‎Appid: ca-app-pub-6881903056221433~3983256819
-‎Adreward: ca-app-pub-6881903056221433/6525779813
-‎Adbanner: ca-app-pub-6881903056221433/5160607111
-‎Intersitial: 
-‎ca-app-pub-6881903056221433/7537724566
+build sekarang dan hasilkan apk,aab dan jks yang sempurna siap rilis!
